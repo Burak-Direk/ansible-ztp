@@ -15,6 +15,7 @@ Runs a single playbook that pushes base configurations to all network devices at
 - Auto-saves running config to startup
 
 2. Lab Topology
+<img width="497" height="451" alt="image" src="https://github.com/user-attachments/assets/23027ba8-462a-45d5-a52d-536700e06c3c" />
 
 3 Cisco IOS devices running on CML (Cisco Modeling Labs):
 
