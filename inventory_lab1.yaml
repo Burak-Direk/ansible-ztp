@@ -1,0 +1,28 @@
+all:
+  vars:
+    ansible_connection: ansible.netcommon.network_cli
+    ansible_network_os: cisco.ios.ios
+    ansible_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          30343035636139336634643035353765646161363632396539363535336338653336323234653131
+          3536343436376166306636393538336565663637313664350a363634336239663438353666616361
+          61373263376165313736313862613831356330643435316336653864336464343664343133353962
+          3739383161326364630a353962643637373330313665306566656461613930336535663061623930
+          3561
+    ansible_user: admin
+    ansible_port: 22
+  children:
+    routers:
+      hosts: 
+        router01:
+          ansible_host: 10.1.1.51
+          device_hostname: R1
+        router02: 
+          ansible_host: 10.1.1.52
+          device_hostname: R2
+
+    switches:
+      hosts:
+        switch01: 
+          ansible_host: 10.1.1.53
+          device_hostname: SW1

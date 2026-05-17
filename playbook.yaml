@@ -1,0 +1,45 @@
+---
+- name: Configure login banners
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: Set the login banner
+      cisco.ios.ios_banner:
+        banner: login
+        text: |
+          #######################################################
+          #                                                     #
+          #     You have successfully entered this system.      #
+          #     Burak                                           #
+          #######################################################
+        state: present
+    - name: NTP configs
+      cisco.ios.ios_config:
+        lines:
+          - ntp server 216.239.35.0
+          - ntp update-calendar
+    - name: DNS configs
+      cisco.ios.ios_config:
+        lines:
+          - ip domain lookup
+          - ip name-server 8.8.8.8
+          - ip host R2 10.1.1.52
+          - ip host R1 10.1.1.51
+    - name: VTY line configs
+      cisco.ios.ios_config:
+        parents: line vty 0 4
+        lines:
+          - login local
+          - transport input ssh
+          - exec-timeout 3
+
+    - name: Logging configs
+      cisco.ios.ios_config:
+        lines:
+          - logging monitor 7
+        save_when: modified
+    - name: Set hostname
+      cisco.ios.ios_config:
+        lines:
+          - hostname {{ device_hostname }}
